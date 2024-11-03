@@ -41,8 +41,8 @@ class Database:
     def criar_tabelas(self) -> None:
         try:
             self.cursor.execute('''
-                CREATE TABELE IF NOT EXISTS setores (
-                    id INTERGER PRIMARY KEY,
+                CREATE TABLE IF NOT EXISTS setores (
+                    id INTEGER PRIMARY KEY,
                     nome TEXT NOT NULL
                 )
             ''')
