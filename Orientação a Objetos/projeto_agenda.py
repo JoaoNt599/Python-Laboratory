@@ -105,7 +105,54 @@ class RepositorioContatos:
 
 
 class CadastroContatos:
-    pass
+    def __init__(self):
+        self.__repositorio_contatos = RepositorioContatos()
+
+
+    @property
+    def repositorio_contatos(self) -> []:
+        return self.__repositorio_contatos
+
+
+    def incluir(self, contato: Contato) -> Contato:
+        resultado = None
+        if self.__repositorio_contatos.existe(contato):
+            input("Contato ja cadastrado. Tecle enter...")
+        else:
+            resultado = self.__repositorio_contatos.incluir(contato)
+        return resultado
+
+
+    def alterar(self, contato: Contato) -> Contato:
+        resultado = None
+        if self.__repositorio_contatos.consultar_indice_por_nome(contato.nome) == -1:
+            input("Contato nao encontrado. Tecle enter...")
+        else:
+            indice = self.__repositorio_contatos.consultar_indice_por_nome(contato.nome)
+            resultado = self.__repositorio_contatos.atulizar(indice, contato)
+        return resultado
+
+
+    def excluir(self, contato: Contato) -> Contato:
+        resultado = None
+        if not self.__repositorio_contatos.existe(contato):
+            input("Contato nao encontrado. Tecle enter...")
+        else:
+            indice = self.__repositorio_contatos.consultar_indice_por_nome(contato.nome)
+            if indice != -1:
+                resultado = self.__repositorio_contatos.excluir_por_indice(indice)
+        return resultado
+
+
+    def consultar(self, nome: str) -> Contato:
+        resultado = None
+        if not  self.__repositorio_contatos.existe(nome):
+            print("Contato nao encontrado.")
+        else:
+            indice = self.__repositorio_contatos.consultar_indice_por_nome(nome)
+            if indice != -1:
+                resultado = self.__repositorio_contatos.excluir_por_indice(indice)
+        return resultado
 
 
 class ContatosApp:
