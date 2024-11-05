@@ -49,23 +49,59 @@ class RepositorioContatos:
 
 
     def atulizar(self, indice: int, contato: Contato) -> None:
-        pass
+        """ Recebe um objeto Contato, localiza-o no repositorio e atualiza seus dados"""
+        if (contato == None):
+            print("Um contato deve ser fornecido.")
+        elif (indice == None):
+            print("Um indice deve ser fornecido.")
+        elif (indice < 0):
+            print("O indice não deve ser negativo")
+        else:
+            self.__repositorio_contatos[indice] = contato
+            resultado = contato
+        return resultado
 
 
-    def excluir_por_indice(self):
-        pass
+    def excluir_por_indice(self, indice: int) -> None:
+        """ Recebe o indice do contato de repositorio e o remove """
+        resultado = None
+        if (indice == None):
+            print("Um indice deve ser fornecido.")
+        elif (indice < 0):
+            print("O indice não deve ser negativo.")
+        else:
+            resultado = self.__repositorio_contatos.pop(indice)
+        return resultado
 
 
-    def consultar_indice_por_nome(self):
-        pass
+    def consultar_indice_por_nome(self, nome: str) -> None:
+        """ Recebe o nome do contato e retorna se existir no repositorio; se não, retorna  -1 """
+        resultado = -1
+        indice = -1
+        for i in range(0, len(self.__repositorio_contatos)):
+            contato = self.__repositorio_contatos[i]
+            if contato.nome == nome:
+                indice = i
+        if indice != -1:
+            resultado = indice
+        return resultado
 
 
-    def existe(self):
-        pass
+    def existe(self, contato: Contato) -> bool:
+        """
+        Recebe um objeto Contato e retorna True caso exista algum com mesmo telefone;
+        Se não, retorna False
+        """
+        resultado = False
+        for c in self.__repositorio_contatos:
+            if c.fone == contato.fone:
+                resultado = True
+                break
+        return resultado
 
 
-    def vazio(self):
-        pass
+    def vazio(self) -> bool:
+        return (len(self.__repositorio_contatos) == 0)
 
 
 class CadastroContatos:
