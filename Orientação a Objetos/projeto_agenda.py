@@ -156,8 +156,80 @@ class CadastroContatos:
 
 
 class ContatosApp:
-    pass
+    def __init__(self):
+        self.__regras_negocio = CadastroContatos()
+        self.__loop_principal()
+
+
+    def __exibe_menu(self) -> None:
+        self.__limpar_tela()
+        print("\n Selecione uma opcao: ")
+        print("\n 1. Incluir novo contato")
+        print("\n 2. Alterar telefone de um contato")
+        print("\n 3. Excluir um contato")
+        print("\n 4. Consultar contato por nome")
+        print("\n 5. Listar todos os contatos")
+        print("\n")
+
+
+    def __limpar_tela(self) -> None:
+        print("\n" * 100)
+
+
+    def __opcao_selecionada(self) -> int:
+        opcao = input("Escolha uma opcao: ")
+        if opcao == '':
+            resultado = -1
+        else:
+            resultado = int(input(opcao))
+        return resultado
+        print("Confirme o selecao...")
+
+
+    def __ler_dados_contato(self) -> Contato:
+        self.__limpar_tela()
+        fone = input("\nTelefone: ")
+        nome = input("\nNome: ")
+        resultado = Contato(fone, nome)
+        return resultado
+
+
+    def __loop_principal(self) -> None:
+        opcao = -1
+        while opcao != 6:
+            self.__exibe_menu()
+            opcao = self.__opcao_selecionada()
+            if opcao == 1:
+                contato = self.__ler_dados_contato()
+                if self.__regras_negocio.incluir(contato) != None:
+                    print("\nContato cadastrado com sucesso.")
+            elif opcao == 2:
+                contato = self.__ler_dados_contato()
+                if self.__regras_negocio.alterar(contato) != None:
+                    print("\nContato alterado com sucesso.")
+            elif opcao == 3:
+                self.__limpar_tela()
+                fone = input("\nTelefone: ")
+                if self.__regras_negocio.excluir(contato) != None:
+                    print("\Contato excluido.")
+            elif opcao == 4:
+                self.__limpar_tela()
+                nome = input("\nInforme o nome do contato a localizar: ")
+                contato = self.__regras_negocio.consultar(nome)
+                if contato != None:
+                    print(f"\nContato encontrado: \n{contato}\n")
+            elif opcao == 5:
+                self.__limpar_tela()
+                if not self.__regras_negocio.repositorio_contatos.vazio():
+                    for contato in self.__regras_negocio.repositorio_contatos.repositorio_contatos:
+                        print(f"\n{contato}\n")
+                else:
+                    print(f"\nNenhum contato cadastrado!")
+            else:
+                print("Opcao invalida!")
+            if opcao != 6:
+                input("Tecle enter para retornar ao menu...")
 
 
 if __name__ == "__main__":
-    pass
+    app = ContatosApp()
