@@ -1,2 +1,4 @@
 .idea
 /venv
+/Flask/MVC/venv
+/Flask/MVC/.idea
