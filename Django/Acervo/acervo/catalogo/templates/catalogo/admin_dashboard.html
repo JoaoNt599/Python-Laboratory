@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Painel Administrativo</title>
+</head>
+<body>
+    <h1>Painel Administrativo</h1>
+
+    <!-- Formulário para Adicionar Livro -->
+    <h2>Adicionar Livro</h2>
+    <form action="{% url 'adicionar_livro' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="text" name="titulo" placeholder="Título" required>
+        <select name="editora">
+            {% for editora in editoras %}
+                <option value="{{ editora.id }}">{{ editora.nome }}</option>
+            {% endfor %}
+        </select>
+        <input type="file" name="foto">
+        <button type="submit">Adicionar Livro</button>
+    </form>
+
+    <!-- Formulário para Adicionar Editora -->
+    <h2>Adicionar Editora</h2>
+    <form action="{% url 'adicionar_editora' %}" method="post">
+        {% csrf_token %}
+        <input type="text" name="nome" placeholder="Nome da Editora" required>
+        <button type="submit">Adicionar Editora</button>
+    </form>
+
+    <!-- Formulário para Adicionar Usuário -->
+    <h2>Adicionar Usuário</h2>
+    <form action="{% url 'adicionar_usuario' %}" method="post">
+        {% csrf_token %}
+        <input type="text" name="username" placeholder="Usuário" required>
+        <input type="password" name="password" placeholder="Senha" required>
+        <label><input type="checkbox" name="is_admin"> Administrador</label>
+        <button type="submit">Adicionar Usuário</button>
+    </form>
+</body>
+</html>
