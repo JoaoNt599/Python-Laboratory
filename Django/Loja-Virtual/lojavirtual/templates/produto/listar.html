@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titulo %}
+    {% if categoria %}
+        {{ categoria.nome }}
+    {% else %}
+        Produtos
+    {% endif %}
+{% endblock %}
+
+{% block conteudo %}
+    <div class="container-fluid">
+        <div class="row" style="margin-top:6%">
+            <div class="col-sm-8 loja-colecao">
+                <div class="loja-item">
+                    <div class="row">
+                        {% for produto in lista_produtos %}
+                        <div class="col-md-4">
+                            <div class="thumbnail">
+                                <a href="{{ produto.get_absolute_url }}">
+                                    <img src="{% if produto.imagem %}
+                                                    {{ produto.imagem.url }}
+                                                {% else %}
+                                                    {% static 'img/default.jpg' %}
+                                                {% endif %}" 
+                                         alt="Imagem de {{ produto.nome }}"
+                                         style="height: 130px; width:auto">
+                                </a>
+                                <div class="caption">
+                                    <h3 class="text-center">
+                                        <a href="{{ produto.get_absolute_url }}">
+                                            {{ produto.nome }}
+                                        </a>
+                                    </h3>
+                                    <p class="text-center">
+                                        R$ {{ produto.preco }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3 col-sm-offset-1 loja-sidebar">
+                <div class="sidebar-module">
+                    <h4>Categoria</h4>
+                    <ol class="list-unstyled">
+                        <li {% if not categoria %}
+                                class="active"
+                            {% endif %}>
+                            <a href="{% url 'main:listar_produtos' %}">Todos</a>
+                        </li>
+                        {% for c in lista_categoria %}
+                            <li {% if categoria.slug == c.slug  %} 
+                                    class="active"
+                                {% endif %}>
+                                <a href="{{ c.get_absolute_url }}">
+                                    {{ c.nome }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
