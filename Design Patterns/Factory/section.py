@@ -1,4 +1,4 @@
-""" Factory Mehod """
+""" Factory Method """
 
 from abc import ABCMeta, abstractmethod
 
