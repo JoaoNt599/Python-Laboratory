@@ -1,8 +1,10 @@
 from django.db import models
 
-from sqlalchemy import Column, Integer, String, Date, Decimal, ForeignKey
+from sqlalchemy import Column, Integer, String, Date, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
+
+from sqlalchemy.types import DECIMAL
 
 
 Base = declarative_base()
@@ -51,7 +53,7 @@ class Produto(Base):
     cod_produto = Column(Integer, primary_key=True)
     nom_produto = Column(String(100), nullable=False)
     est_produto = Column(Integer, default=0)
-    pco_produto = Column(Decimal(10, 2), default=0)
+    pco_produto = Column(DECIMAL(10, 2), default=0)
     fabricante = Column(String(100), nullable=False)
 
 
@@ -106,7 +108,7 @@ class VendaContemProduto(Base):
     __tablename__ = 'venda_contem_produto'
     num_pedido = Column(Integer, ForeignKey('venda.num_pedido'), primary_key=True)
     cod_produto = Column(Integer, ForeignKey('produto.cod_produto'), primary_key=True)
-    pco_produto = Column(Decimal(10, 2), default=0)
+    pco_produto = Column(DECIMAL(10, 2), default=0)
     qtd_produto = Column(Integer, default=0)
     
     venda = relationship("Venda", back_populates="produtos")
