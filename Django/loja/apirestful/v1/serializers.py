@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Cliente, TelefoneCliente, EmailCliente, Venda, Produto, Fornecedor, TelefoneFornecedor, EmailFornecedor, Compra, PedidoEstaCompra, VendaContemProduto
+from apirestful.models import Cliente, TelefoneCliente, EmailCliente, Venda, Produto, Fornecedor, TelefoneFornecedor, EmailFornecedor, Compra, PedidoEstaCompra, VendaContemProduto
 # from .models import *
 
 
