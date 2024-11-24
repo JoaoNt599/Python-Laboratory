@@ -84,5 +84,11 @@ class ClienteView(APIView):
         return Response({'message': 'Cliente deletado com sucesso'}, status=status.HTTP_204_NO_CONTENT)
 
     
-
+class BuscarClientePorIDView(APIView):
+    def get(self, request, pk):
+        cliente = session.query(Cliente).filter_by(cod_cliente=pk).first()
+        if not cliente:
+            return Response({'error': 'Cliente não encontrado'}, status=status.HTTP_404_NOT_FOUND)
+        serializer = ClienteSerializer(cliente)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
