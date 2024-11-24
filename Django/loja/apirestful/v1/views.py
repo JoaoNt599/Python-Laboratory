@@ -92,3 +92,12 @@ class BuscarClientePorIDView(APIView):
         serializer = ClienteSerializer(cliente)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+
+class BuscarClientePorNomeView(APIView):
+    def get(self, request, nome):
+        clientes = session.query(Cliente).filter(Cliente.nome.ilike(f"%{nome}%")).all()
+        if not clientes:
+            return Response({'error': 'Nenhum cliente encontrado com esse nome'}, status=status.HTTP_404_NOT_FOUND)
+        serializer = ClienteSerializer(clientes, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
