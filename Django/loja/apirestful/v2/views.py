@@ -59,14 +59,22 @@ class ClienteView(APIView):
         try:
             cliente = session.query(Cliente).filter_by(cod_cliente=pk).first()
             if not cliente:
-                return Response({'error': 'Cliente não encontrado'}, status=status.HTTP_404_NOT_FOUND)
+                # Criando novo cliente
+                serializer = ClienteSerializer(data=request.data)
+                if serializer.is_valid():
+                    cliente = Cliente(**serializer.validated_data)
+                    session.add(cliente)
+                    session.commit()
+                    return Response(serializer.data, status=status.HTTP_201_CREATED)
+                return Response(serializer.erros, status=status.HTTP_400_BAD_REQUEST)
             
+            # Atualizando cliente existente
             serializer = ClienteSerializer(cliente, data=request.data)
             if serializer.is_valid():
                 for key, value in serializer.validated_data.items():
                     setattr(cliente, key, value)
                 session.commit()
-                return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+                return Response(serializer.data, status=status.HTTP_200_OK)
             return Response(serializer.erros, status=status.HTTP_400_BAD_REQUEST)
         except Exception as erro:
             return Response({'error': f'Erro interno do servidor: {str(erro)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -85,7 +93,7 @@ class ClienteView(APIView):
                 for key, value in serializer.validated_data.items():
                     setattr(cliente, key, value)
                 session.commit()
-                return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+                return Response(serializer.data, status=status.HTTP_200_OK)
             return Response(serializer.erros, status=status.HTTP_400_BAD_REQUEST)
         except Exception as erro:
             return Response({'error': f'Erro interno do servidor: {str(erro)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

@@ -46,7 +46,15 @@ class ClienteView(APIView):
     def put(self, request, pk):
         cliente = session.query(Cliente).filter_by(cod_cliente=pk).first()
         if not cliente:
-            return Response({'erro': 'Cliente não encontrado'}, status=status.HTTP_404_NOT_FOUND)
+            # Criando novo cliente
+            serializer = ClienteSerializer(data=request.data)
+            if serializer.is_valid():
+                cliente = Cliente(**serializer.validated_data)
+                session.add(cliente)
+                session.commit()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.erros, status=status.HTTP_400_BAD_REQUEST)
+        # Atualizando um cliente
         serializer = ClienteSerializer(cliente, data=request.data)
         if serializer.is_valid():
             for key, value in serializer.validated_data.items():
