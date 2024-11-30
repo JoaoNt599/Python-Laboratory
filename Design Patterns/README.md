@@ -6,8 +6,8 @@
 
 ## Principais categorias:
 
-    1. Criacionais: Focados na criação de objetos, garantindo flexibilidade e reutilização. Ex.: Singleton, Factory.
-    2. Estruturais: Tratam da organização e composição de classes e objetos. Ex.: Adapter, Composite.
-    3. Comportamentais: Lidam com a interação e comunicação entre objetos. Ex.: Observer, Strategy.
+1. Criacionais: Focados na criação de objetos, garantindo flexibilidade e reutilização. Ex.: Singleton, Factory.
+2. Estruturais: Tratam da organização e composição de classes e objetos. Ex.: Adapter, Composite.
+3. Comportamentais: Lidam com a interação e comunicação entre objetos. Ex.: Observer, Strategy.
 
 ## Os padrões não são regras rígidas, mas guias para resolver problemas específicos de forma eficaz. 
