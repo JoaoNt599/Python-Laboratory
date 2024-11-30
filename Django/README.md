@@ -1,6 +1,22 @@
 # Projeto Exemplo: API Restful 
 
-## Utilizando SQLAlchemy, iremos implementar esse SQL em um API com DRF:
+
+## Excutar aplicação:
+
+1. Python:
+
+    pip install -r requirements.txt
+
+    python manage.py runserver
+
+2. Docker:
+
+    docker-compose build
+
+    docker-compose up
+
+
+### Utilizando SQLAlchemy, iremos implementar esse SQL em um API com DRF:
 
 ![alt text](image.png)
 
