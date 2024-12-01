@@ -1,4 +1,7 @@
+import csv
+
 from django.shortcuts import render
+from django.http import HttpResponse
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -101,3 +104,28 @@ class BuscarClientePorNomeView(APIView):
         serializer = ClienteSerializer(clientes, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+
+class ExportarCSVCompletoView(APIView):
+    def get(self, request):
+        if not request.user.is_authenticated:
+            return Response({'error': 'Autenticação necessária'}, status=status.HTTP_401_UNAUTHORIZED)
+        
+        try:
+            arquivo = "dados_completos.csv"
+
+            response = HttpResponse(content_type='text/csv')
+            response['Content-Disposition'] = f'attachment; filename="{arquivo}"'
+
+            writer = csv.writer(response)
+
+            # Tabela Cliente
+            writer.writerow(['Tabela: Cliente'])
+            writer.writerow(['ID', 'Nome', 'Rua', 'Número'])
+            clientes = session.query(Cliente).all()
+            for cliente in clientes:
+                writer.writerow([cliente.cod_cliente, cliente.nom_cliente, cliente.rua_cliente, cliente.num_cliente])
+            
+            # ...
+
+        except Exception as erro:
+            return Response({'error': f'Erro interno do servidor: {str(erro)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
