@@ -8,6 +8,7 @@ class MinhaCollectionRepository:
         self.__db_connection = db_connection
 
 
+    # Insert
     def insert_document(self, document: Dict) -> Dict:
         collection = self.__db_connection.get_collection(self.__connection_name)
         collection.insert_one(document)
@@ -20,6 +21,7 @@ class MinhaCollectionRepository:
         return list_of_documents
 
 
+    # Busca
     def select_many(self, filter) -> List[Dict]:
         collection = self.__db_connection.get_collection(self.__connection_name)
         data = collection.find(
@@ -73,3 +75,37 @@ class MinhaCollectionRepository:
         collection = self.__db_connection.get_collection(self.__connection_name)
         data = collection.find({"_id": ObjectId("67b079d93b2c2191ab2f2bd8") })
         for i in data: print(i)
+
+
+    # Edit
+    def edit_registry(self, name) -> None:
+        collection = self.__db_connection.get_collection(self.__connection_name)
+        data = collection.update_one(
+            { "_id": ObjectId("67b09e0ab4e33ce485423d49") }, # Filtro
+            { "$set": {"nome": name} }
+        )
+        if data.modified_count > 0:
+            print("Doc atualizado")
+        else:
+            print("Campo já atualizado.")
+        print(data.modified_count)
+
+    
+    def edit_many_registries(self, filtro, propriedades) -> None:
+        collection = self.__db_connection.get_collection(self.__connection_name)
+        data = collection.update_many(
+            filtro, #Filtro
+            { "$set": {"profissao": propriedades} }
+        )
+        if data.modified_count > 0:
+            print("Doc atualizado")
+        else:
+            print("Campo já atualizado.")
+        print(data.modified_count)
+
+
+    # Delete
+    def delete_registry(self) -> None:
+        collection = self.__db_connection.get_collection(self.__connection_name)
+        data = collection.delete_many({ "apelido": "Jaum" })
+        print(data.deleted_count)

@@ -53,6 +53,19 @@ if __name__ == "__main__":
     minha_collection_repository.select_by_object_id()
     print()
 
+    minha_collection_repository.edit_registry("João Vieira")
+    print()
+    
+    # filtro = {"profissao": "Desenvolvedor"}
+    # propriedades = {"profissao": "Programador", "apelido": "Dev"}
 
+    filtro = {"profissao": "Programador"}
+    propriedades = {"idade": "27"}
+    
+    minha_collection_repository.edit_many_registries(filtro, propriedades)
+    print()
+
+    minha_collection_repository.delete_registry()
+    print()
 
     
