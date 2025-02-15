@@ -1,7 +1,7 @@
 # Python com MongoDB
 
 
-## Playlist do Progrmador Lhama:
+## Playlist do Programador Lhama:
 - https://www.youtube.com/playlist?list=PLAgbpJQADBGLk7QlD_rzH9vqbt3TrwL-k
 
 ## MongoDB Compass:
